@@ -1,0 +1,4 @@
+<map file="hunters_run.png" projection="Mercator">
+  <point x="0" y="0" geo="WGS84 29.281568	-81.182107"/>
+  <point x="451" y="360" geo="WGS84 29.257707	-81.147840"/>
+</map>
