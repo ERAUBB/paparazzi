@@ -133,17 +133,22 @@
     <define name="AUTO_THROTTLE_PGAIN" value="0.025" unit="%/(m/s)"/>
     <define name="AUTO_THROTTLE_IGAIN" value="0.1"/>
     <define name="AUTO_THROTTLE_PITCH_OF_VZ_PGAIN" value="0.05" unit="rad/(m/s)"/>
+
     <!-- auto pitch inner loop -->
     <define name="AUTO_PITCH_PGAIN" value="0.05"/>
     <define name="AUTO_PITCH_IGAIN" value="0.075"/>
     <define name="AUTO_PITCH_MAX_PITCH" value="0.5"/>
     <define name="AUTO_PITCH_MIN_PITCH" value="-0.5"/>
-    <define name="THROTTLE_SLEW" value="0.05"/>
+
     <!-- throttle set point -->
-    <define name="AUTO_AIRSPEED_SETPOINT" value="13" unit="m/s"/>
+	<define name="AUTO_AIRSPEED_SETPOINT" value="13" unit="m/s"/>
     <define name="AUTO_AIRSPEED_PGAIN" value="0.060"/>
     <define name="AUTO_AIRSPEED_IGAIN" value="0.050"/>
-  </section>
+    <define name="AUTO_GROUNDSPEED_SETPOINT" value="6.0" unit="m/s"/>
+    <define name="AUTO_GROUNDSPEED_PGAIN" value="0.75"/>
+    <define name="AUTO_GROUNDSPEED_IGAIN" value="0.25"/>
+    <define name="THROTTLE_SLEW" value="1.0"/>
+ 	</section>
 
   <section name="HORIZONTAL CONTROL" prefix="H_CTL_">
     <define name="COURSE_PGAIN" value="0.85"/>
@@ -177,9 +182,9 @@
   <modules>
     <load name="gps_ubx_ucenter.xml"/>
     <load name="airspeed_adc.xml">
-	<configure name= "ADC_AIRSPEED" value = "1"/>
-	<define name="AIRSPEED_QUADRARIC_SCALE" value = "0.0495"/>
-	<define name="AIRSPEED_BIAS" value = "2.500"/>
+	<configure name= "ADC_AIRSPEED" value = "ADC_5"/>
+		<define name="AIRSPEED_QUADRATIC_SCALE" value = "40.06"/>
+		<define name="AIRSPEED_BIAS" value = "30.01"/> 
     </load>
   </modules>
 
@@ -213,14 +218,13 @@
 
     <subsystem name="radio_control" type="ppm"/>
     <!-- Communication -->
-    <subsystem name="telemetry" type="transparent">
-    <configure name="MODEM_BAUD" value="B57600"/>
+    <subsystem name="telemetry" type="transparent_usb">
     </subsystem>
     <!-- Actuators -->
     <subsystem name="control"/>
     <!-- Sensors -->
     <subsystem name="navigation"/>
-    <subsystem name="gps" type="mediatek_diy"/>
+	<subsystem name="gps" type="ublox"/>
 
 
 </firmware>
