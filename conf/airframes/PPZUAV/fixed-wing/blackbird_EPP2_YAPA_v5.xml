@@ -201,7 +201,6 @@
 
 
   <modules>
-    <load name="gps_ubx_ucenter.xml"/>
     <load name="airspeed_adc.xml">
 	<configure name="ADC_AIRSPEED" value="ADC_5"/>
 		<define name="AIRSPEED_QUADRATIC_SCALE" value="2.2938"/>
