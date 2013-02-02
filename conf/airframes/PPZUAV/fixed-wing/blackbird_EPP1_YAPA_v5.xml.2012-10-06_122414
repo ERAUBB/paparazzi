@@ -4,11 +4,11 @@
 <airframe name="Blackbird">
 
   <servos>
-    <servo name="THROTTLE" no="7" min="1000" neutral="1100" max="1980"/>
-    <servo name="AILERON_LEFT" no="4" min="1080" neutral="1620" max="2060"/>
-    <servo name="AILERON_RIGHT" no="2" min="1080" neutral="1460" max="1900"/>
-    <servo name="ELEVATOR" no="3" min="1080" neutral="1520" max="1980"/>
-    <servo name="RUDDER" no="6" min="1000" neutral="1400" max="1980"/>
+<servo name="THROTTLE" no="8" min="1000" neutral="1100" max="1980"/>
+<servo name="AILERON_LEFT" no="9" min="1080" neutral="1620" max="2060"/>
+<servo name="AILERON_RIGHT" no="1" min="1080" neutral="1460" max="1900"/>
+<servo name="ELEVATOR" no="0" min="1080" neutral="1520" max="1980"/>
+<servo name="RUDDER" no="5" min="1000" neutral="1400" max="1980"/>
   </servos>
 
 
@@ -27,11 +27,11 @@
   </rc_commands>
 
   <command_laws>
-    <set servo="AILERON_LEFT" value="-@ROLL"/>
-    <set servo="AILERON_RIGHT" value="-@ROLL"/>
+    <set servo="AILERON_LEFT" value="@ROLL"/>
+    <set servo="AILERON_RIGHT" value="@ROLL"/>
     <set servo="THROTTLE" value="@THROTTLE"/>
-    <set servo="ELEVATOR" value="@PITCH"/>
-    <set servo="RUDDER" value="-@YAW"/>
+    <set servo="ELEVATOR" value="-@PITCH"/>
+    <set servo="RUDDER" value="-@ROLL"/>
   </command_laws>
 
 
@@ -119,12 +119,12 @@
   <section name="VERTICAL CONTROL" prefix="V_CTL_">
 
     <!-- outer loop proportional gain -->
-    <define name="ALTITUDE_PGAIN" value="0.2"/>
+    <define name="ALTITUDE_PGAIN" value="0.15000000596"/>
     <!-- outer loop saturation -->
     <define name="ALTITUDE_MAX_CLIMB" value="15"/>
 
     <!-- auto throttle inner loop -->
-    <define name="AUTO_THROTTLE_NOMINAL_CRUISE_THROTTLE" value="0.5" unit="%"/>
+    <define name="AUTO_THROTTLE_NOMINAL_CRUISE_THROTTLE" value="0.40000000596" unit="%"/>
     <define name="AUTO_THROTTLE_MIN_CRUISE_THROTTLE" value="0.4" unit="%"/>
     <define name="AUTO_THROTTLE_MAX_CRUISE_THROTTLE" value="0.8" unit="%"/>
     <define name="AUTO_THROTTLE_LOITER_TRIM" value="1500" unit="pprz_t"/>
@@ -133,20 +133,25 @@
     <define name="AUTO_THROTTLE_PGAIN" value="0.025" unit="%/(m/s)"/>
     <define name="AUTO_THROTTLE_IGAIN" value="0.1"/>
     <define name="AUTO_THROTTLE_PITCH_OF_VZ_PGAIN" value="0.05" unit="rad/(m/s)"/>
+
     <!-- auto pitch inner loop -->
     <define name="AUTO_PITCH_PGAIN" value="0.05"/>
-    <define name="AUTO_PITCH_IGAIN" value="0.075"/>
+    <define name="AUTO_PITCH_IGAIN" value="0.054999999702"/>
     <define name="AUTO_PITCH_MAX_PITCH" value="0.5"/>
     <define name="AUTO_PITCH_MIN_PITCH" value="-0.5"/>
-    <define name="THROTTLE_SLEW" value="0.05"/>
+
     <!-- throttle set point -->
-    <define name="AUTO_AIRSPEED_SETPOINT" value="13" unit="m/s"/>
+	<define name="AUTO_AIRSPEED_SETPOINT" value="13" unit="m/s"/>
     <define name="AUTO_AIRSPEED_PGAIN" value="0.060"/>
     <define name="AUTO_AIRSPEED_IGAIN" value="0.050"/>
-  </section>
+    <define name="AUTO_GROUNDSPEED_SETPOINT" value="6.0" unit="m/s"/>
+    <define name="AUTO_GROUNDSPEED_PGAIN" value="0.75"/>
+    <define name="AUTO_GROUNDSPEED_IGAIN" value="0.25"/>
+    <define name="THROTTLE_SLEW" value="1.0"/>
+ 	</section>
 
   <section name="HORIZONTAL CONTROL" prefix="H_CTL_">
-    <define name="COURSE_PGAIN" value="0.85"/>
+    <define name="COURSE_PGAIN" value="0.794000029564"/>
     <define name="ROLL_MAX_SETPOINT" value="60" unit="deg"/>
     <define name="PITCH_MAX_SETPOINT" value="45" unit="deg"/>
     <define name="PITCH_MIN_SETPOINT" value="-15" unit="deg"/>
@@ -175,12 +180,11 @@
 
 
   <modules>
-    <load name="ublox.xml"/>
-  <load name="imu_ppzuav.xml" />
+    <load name="gps_ubx_ucenter.xml"/>
     <load name="airspeed_adc.xml">
-	<configure name= "ADC_AIRSPEED" value = "1"/>
-	<define name="AIRSPEED_QUADRARIC_SCALE" value = "0.0495"/>
-	<define name="AIRSPEED_BIAS" value = "2.500"/>
+	<configure name="ADC_AIRSPEED" value="ADC_5"/>
+		<define name="AIRSPEED_QUADRATIC_SCALE" value="2.2938"/>
+		<define name="AIRSPEED_BIAS" value="789"/> 
     </load>
   </modules>
 
@@ -214,14 +218,13 @@
 
     <subsystem name="radio_control" type="ppm"/>
     <!-- Communication -->
-    <subsystem name="telemetry" type="transparent">
-    <configure name="MODEM_BAUD" value="B57600"/>
+    <subsystem name="telemetry" type="transparent_usb">
     </subsystem>
     <!-- Actuators -->
     <subsystem name="control"/>
     <!-- Sensors -->
     <subsystem name="navigation"/>
-    <subsystem name="gps" type="mediatek_diy"/>
+	<subsystem name="gps" type="ublox"/>
 
 
 </firmware>

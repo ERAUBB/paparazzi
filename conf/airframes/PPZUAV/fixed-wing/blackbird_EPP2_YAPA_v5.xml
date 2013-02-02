@@ -201,6 +201,7 @@
 
 
   <modules>
+    <load name="gps_ubx_ucenter.xml"/>
     <load name="airspeed_adc.xml">
 	<configure name="ADC_AIRSPEED" value="ADC_5"/>
 		<define name="AIRSPEED_QUADRATIC_SCALE" value="2.2938"/>
@@ -242,7 +243,7 @@
     <subsystem name="control"/>
     <!-- Sensors -->
     <subsystem name="navigation"/>
-	<subsystem name="gps" type="mediatek_diy"/>
+	<subsystem name="gps" type="ublox"/>
 
 
 </firmware>
